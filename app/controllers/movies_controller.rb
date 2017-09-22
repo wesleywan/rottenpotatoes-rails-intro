@@ -17,11 +17,12 @@ class MoviesController < ApplicationController
       @movies = @movies.sort_by do |movie|
         movie.title
       end
-      Movie.Title = Movie.Title.hilite
+      @title_header = 'hilite'
     elsif sort == "Date"
       @movies = @movies.sort_by do |movie|
         movie.release_date
       end
+      @release_header = 'hilite'
     end
     @movies
   end
