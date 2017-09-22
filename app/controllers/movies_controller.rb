@@ -14,18 +14,15 @@ class MoviesController < ApplicationController
     sort = params[:categ]
     @movies = Movie.all
     if sort == "Title"
-      res = @movies.sort_by do |movie|
+      @movies = @movies.sort_by do |movie|
         movie.title
       end
-      return res
     elsif sort == "Date"
-      res = @movies.sort_by do |movie|
+      @movies = @movies.sort_by do |movie|
         movie.release_date
       end
-      return res
-    else
-      return @movies
     end
+    @movies
   end
 
   def new
