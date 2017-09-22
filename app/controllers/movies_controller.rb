@@ -11,7 +11,7 @@ class MoviesController < ApplicationController
   end
 
   def index
-    sort = params[:format]
+    sort = params[:categ]
     @movies = Movie.all
     if sort == "Title"
       res = @movies.sort_by do |movie|
