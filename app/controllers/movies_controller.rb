@@ -34,7 +34,8 @@ class MoviesController < ApplicationController
     end
 
     @all_ratings = Movie.ratings.inject(Hash.new) do |all_ratings, rating|
-      all_ratings[rating] = @ratings.nil? ? false : @ratings.has_key?(rating) 
+      all_ratings[rating] = @ratings.nil? ? false : @ratings.has_key?(rating)
+      put all_ratings
     end
     
   end
