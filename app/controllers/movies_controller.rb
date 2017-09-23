@@ -26,14 +26,21 @@ class MoviesController < ApplicationController
       @release_date_header = 'hilite'
     end
     
-    @all_ratings = Movie.ratings
     
-    # @ratings = params[:ratings]
-    # if @ratings.nil?
-    #   ratings = Movie.ratings 
-    # else
-    #   ratings = @ratings.keys
-    # end
+    @ratings = params[:ratings]
+    if @ratings.nil?
+      ratings = Movie.ratings 
+    else
+      ratings = @ratings.keys
+    end
+    
+    @all_ratings = Movie.ratings.inject(Hash.new) do |all_ratings, rating|
+      if @ratings.nil?
+        all_ratings[rating] = false
+      else
+        all_ratings[rating] = @ratings.has_key?(rating)
+      end
+    end
     
   end
 
