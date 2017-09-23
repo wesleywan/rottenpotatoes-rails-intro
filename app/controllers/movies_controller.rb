@@ -12,10 +12,10 @@ class MoviesController < ApplicationController
 
   def index
     sort = params[:categ]
-    @movies = Movie.find(:all, :order => params[:categ])
-    if sort == "Title"
+    @movies = Movie.find(:all, :order => sort)
+    if sort == "title"
       @title_header = 'hilite'
-    elsif sort == "Date"
+    elsif sort == "release_header"
       @release_date_header = 'hilite'
     end
   end
