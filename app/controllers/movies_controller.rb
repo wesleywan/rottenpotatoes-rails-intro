@@ -12,7 +12,6 @@ class MoviesController < ApplicationController
 
   def index
     sort = params[:categ]
-    @movies = Movie.all
     @ratings = params[:ratings] 
     
     if @ratings.nil?
@@ -27,7 +26,7 @@ class MoviesController < ApplicationController
     end
     
     if sort.nil?
-      @movies.find_all_by_rating(ratings)
+      Movie.find_all_by_rating(ratings)
     end
       
     if sort == "title"
