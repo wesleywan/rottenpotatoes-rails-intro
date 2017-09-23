@@ -12,7 +12,7 @@ class MoviesController < ApplicationController
 
   def index
     sort = params[:categ]
-    movies = Movies.all
+    movies = Movie.all
     @ratings = params[:ratings] 
     
     if @ratings.nil?
@@ -27,24 +27,24 @@ class MoviesController < ApplicationController
     end
     
     @movies = []
-    if sort.nil?
-      movies.each do |movie|
-        if ratings.include? movie.rating
-          @movies.inject(movie)
-        end
+    movies.each do |movie|
+      if ratings.include? movie.rating
+        @movies.push(movie)
       end
     end
       
-    if sort == "title"
-      @movies = @movies.sort_by do |movie|
-        movie.title
+    if !sort.nil?
+      if sort == "title"
+        @movies = @movies.sort_by do |movie|
+          movie.title
+        end
+        @title_header = 'hilite'
+      elsif sort == "release_date"
+        @movies = @movies.sort_by do |movie|
+          movie.release_date
+        end
+        @release_date_header = 'hilite'
       end
-      @title_header = 'hilite'
-    elsif sort == "release_date"
-      @movies = @movies.sort_by do |movie|
-        movie.release_date
-      end
-      @release_date_header = 'hilite'
     end
     
   end
