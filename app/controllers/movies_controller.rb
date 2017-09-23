@@ -11,9 +11,14 @@ class MoviesController < ApplicationController
   end
 
   def index
-    sort = params[:categ]
+    sort = params[:sort]
     movies = Movie.all
     @ratings = params[:ratings] 
+    
+    if sort.nil? && @ratings.nil? &&
+        (!session[:sort].nil? || !session[:ratings].nil?)
+      redirect_to movies_path(:sort => session[:sort], :ratings => session[:ratings])
+    end
     
     if @ratings.nil?
       ratings = Movie.ratings 
@@ -46,6 +51,9 @@ class MoviesController < ApplicationController
         @release_date_header = 'hilite'
       end
     end
+    
+    session[:sort] = sort
+    session[:ratings] = @ratings
     
   end
 
