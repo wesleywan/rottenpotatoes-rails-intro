@@ -12,8 +12,24 @@ class MoviesController < ApplicationController
 
   def index
     sort = params[:categ]
-    
     @movies = Movie.all
+    @ratings = params[:ratings] 
+    
+    if @ratings.nil?
+      ratings = Movie.ratings 
+    else
+      ratings = @ratings.keys
+    end
+
+    @all_ratings = Movie.ratings.inject(Hash.new) do |all_ratings, rating|
+      all_ratings[rating] = @ratings.nil? ? false : @ratings.has_key?(rating)
+      all_ratings
+    end
+    
+    if sort.nil?
+      @movies.find_all_by_rating(ratings)
+    end
+      
     if sort == "title"
       @movies = @movies.sort_by do |movie|
         movie.title
@@ -24,18 +40,6 @@ class MoviesController < ApplicationController
         movie.release_date
       end
       @release_date_header = 'hilite'
-    end
-    
-    @ratings = params[:ratings] 
-    if @ratings.nil?
-      ratings = Movie.ratings 
-    else
-      ratings = @ratings.keys
-    end
-
-    @all_ratings = Movie.ratings.inject(Hash.new) do |all_ratings, rating|
-      all_ratings[rating] = @ratings.nil? ? false : @ratings.has_key?(rating)
-      all_ratings
     end
     
   end
