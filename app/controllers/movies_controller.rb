@@ -40,6 +40,7 @@ class MoviesController < ApplicationController
       else
         all_ratings[rating] = @ratings.has_key?(rating)
       end
+      puts all_ratings
     end
     
   end
