@@ -12,6 +12,7 @@ class MoviesController < ApplicationController
 
   def index
     sort = params[:categ]
+    movies = Movies.all
     @ratings = params[:ratings] 
     
     if @ratings.nil?
@@ -25,8 +26,13 @@ class MoviesController < ApplicationController
       all_ratings
     end
     
+    @movies = []
     if sort.nil?
-      Movie.find_all_by_rating(ratings)
+      movies.each do |movie|
+        if ratings.include? movie.rating
+          @movies.inject(movie)
+        end
+      end
     end
       
     if sort == "title"
