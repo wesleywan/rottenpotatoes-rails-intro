@@ -24,7 +24,6 @@ class MoviesController < ApplicationController
       end
       @release_date_header = 'hilite'
     end
-    @movies
   end
 
   def new
